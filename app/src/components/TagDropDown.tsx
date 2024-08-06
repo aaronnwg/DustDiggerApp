@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Autocomplete } from '@mui/material';
+import { ipUrl } from './Config'; // Import the URL from the config file
 
 interface TagDropdownProps {
   onChange: (value: string) => void;
@@ -24,7 +25,7 @@ const TagDropdown: React.FC<TagDropdownProps> = ({ onChange, selectedTag, select
     const fetchTagNames = async () => {
       try {
         console.log('Selected Group:', selectedGroup);
-        const response = await fetch(`https://10.247.29.245:3000/api/set_dust_type`, {
+        const response = await fetch(`${ipUrl}/api/set_dust_type`, { // Use ipUrl here
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

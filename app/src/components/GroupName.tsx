@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Autocomplete } from '@mui/material';
 import { sortBy } from 'lodash';
+import { ipUrl } from './Config'; // Import the URL from the config file
 
 interface GroupNameProps {
   onChange: (groups: string) => void;
@@ -17,13 +18,11 @@ const GroupName: React.FC<GroupNameProps> = ({ onChange, onGroupChange, selected
   const [groupNames, setGroupNames] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [inputLabel, setInputLabel] = useState<string>('Experiment Groups');
-  const [textFieldLabel, setTextFieldLabel] = useState<string>('');
 
   useEffect(() => {
     const fetchGroupNames = async () => {
       try {
-        const response = await fetch('https://10.247.29.245:3000/api/set_dust_type', {
+        const response = await fetch(`${ipUrl}/api/set_dust_type`, { // Use ipUrl here
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -57,11 +56,6 @@ const GroupName: React.FC<GroupNameProps> = ({ onChange, onGroupChange, selected
     onGroupChange(value);
   };
 
-  const handleBoxClick = () => {
-    setInputLabel('');
-    setTextFieldLabel('Experiment Groups');
-  };
-
   return (
     <Box
       component="form"
@@ -76,7 +70,6 @@ const GroupName: React.FC<GroupNameProps> = ({ onChange, onGroupChange, selected
       }}
       noValidate
       autoComplete="off"
-      onClick={handleBoxClick}
     >
       <FormControl fullWidth sx={{ m: 1, ml: 6 }}>
         <Autocomplete

@@ -6,6 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import { sortBy } from 'lodash';
+import { ipUrl } from './Config'; // Import the URL from the config file
 
 interface DustTypeProps {
   onChange: (types: number[]) => void;
@@ -21,7 +22,7 @@ const DustType: React.FC<DustTypeProps> = ({ onChange, selectedTypes, selectedGr
   useEffect(() => {
     const fetchDustTypes = async () => {
       try {
-        const response = await fetch(`https://10.247.29.245:3000/api/set_dust_type`, {
+        const response = await fetch(`${ipUrl}/api/set_dust_type`, { // Use ipUrl here
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

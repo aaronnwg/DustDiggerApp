@@ -5,7 +5,6 @@ import '../styles/Info.css'
 
 const Top: React.FC = () => {
     const [infoModalOpen, setInfoModalOpen] = useState(false);
-    const [healthModalOpen, setHealthModalOpen] = useState(false);
 
     const handleInfoClick = () => {
         console.log('Info clicked!');
@@ -16,14 +15,6 @@ const Top: React.FC = () => {
         setInfoModalOpen(false);
     };
 
-    const handleHealthClick = () => {
-        console.log('Accelerator Health clicked!');
-        setHealthModalOpen(true);
-    };
-
-    const handleHealthClose = () => {
-        setHealthModalOpen(false);
-    };
 
     return (
         <div id='top'>
@@ -38,19 +29,12 @@ const Top: React.FC = () => {
                             <div className="modal-scroll">
                                 <h1>Welcome to the IMPACT Dust Accelerator Laboratory Interface (Dust Data Digger)</h1>
                                 <p>
-                                    This Application interfaces with the IMPACT Lab AWS server and plots data shot by the lab's Pelletron Accelerator. Any dust data stored in our server can be plotted as a saveable .png and downloaded as a .csv file using this application.
+                                    This application interfaces with past data from the IMPACT Lab's Pelletron Accelerator. Using this application any dust data queried will be plotted as a saveable .png and a table will be gerated that can be downloaded as a .csv file.
                                 </p>
                                 <h2>Instructions:</h2>
                                 <ol>
-                                    <li>
-                                        Log into LASP VPN. The application cannot be used without a LASP VPN connection.
-                                    </li>
-                                    <li id='error-info'>
-                                        Temporary Measure: once logged into LASP VPN, open a new tab and enter <a href='https://10.247.29.245:3000' target='blank'>'https://10.247.29.245:3000'</a>. Click <span>'Advanced'</span> or <span>'show details'</span>, and then choose to proceed. Then restart the application by opening a new window or refreshing. This issue is a result of the SSL not yet being configured, and is required until it has been configured in order for your browser to trust the application domain. This will be resolved shortly and this step will then be removed.
-                                    </li>
                                 </ol>
                                 <ul>
-                                    <li>Server undergoes a routine rewrite every 4 hours. The server cannot be accessed during a rewrite. If steps 1 and 2 have been followed, and a server error persists, then a rewrite is in process. Wait a few minutes for the rewrite to complete, and try again.</li>
                                     <li>Enter the number of data instances you want to plot.</li>
                                     <li>If no value is selected 100 instances will be used as a default. It is not recommended to exceed 10,000 instances on a single plot due to data processing time.</li>
                                     <li>Enter values for any constraints you wish to use.</li>
@@ -67,37 +51,10 @@ const Top: React.FC = () => {
                                     <li>The 'DOWNLOAD DATA AS CSV' button can be used to download the Data Table as a CSV File.</li>
                                 </ul>
                                 <h3>Happy Plotting!</h3>
-                                <h2>Coming Soon:</h2>
-                                <ul>
-                                    <li>Desktop version of the application</li>
-                                    <li>File drop for plotting data not found on the IMPACT server</li>
-                                    <li>Matching QD waveforms to their respective dust hits.</li>
-                                    <li>Accelerator Health Metrics</li>
-                                </ul>
                                 <p>
                                     Please Email <a href="mailto:aaron.kessler@lasp.colorado.edu">aaron.kessler@lasp.colorado.edu</a> and <a href="mailto:ethan.ayari@lasp.colorado.edu">ethan.ayari@lasp.colorado.edu</a> to report any bugs or to request changes or additions to the application.
                                 </p>
-                                {/* temp download buttons */}
-                                <a href="https://yourserver.com/downloads/YourAppSetup.exe" download>Download for Windows</a>
-                                <br />
-                                <a href="https://yourserver.com/downloads/YourApp.dmg" download>Download for macOS</a>
-                                <br />
-                                <a href="https://yourserver.com/downloads/YourApp.AppImage" download>Download for Linux</a> 
                             </div> 
-                        </div>
-                    </div>
-                )}
-                <button id='health' className='modal' onClick={handleHealthClick}>
-                    Accelerator Health
-                </button>
-                {healthModalOpen && (
-                    <div className="modal-overlay" >
-                        <span className="close" onClick={handleHealthClose}>&times;</span>
-                        <div className="modal-content" onClick={(e) => e.stopPropagation()} >
-                            <div className="modal-scroll">
-                                <h1>IMPACT Dust Accelerator Health Metrics</h1>
-                                <h2>Coming Soon...</h2>
-                            </div>
                         </div>
                     </div>
                 )}
