@@ -37,10 +37,15 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
     const compareValueA = a[sortColumn];
     const compareValueB = b[sortColumn];
 
-    if (sortOrder === 'asc') {
-      return compareValueA - compareValueB;
+    if (sortColumn === 'Time') {
+      // Parse the date strings into Date objects
+      const dateA = new Date(compareValueA);
+      const dateB = new Date(compareValueB);
+      // Compare Date objects
+      return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
     } else {
-      return compareValueB - compareValueA;
+      // Default numeric comparison
+      return sortOrder === 'asc' ? compareValueA - compareValueB : compareValueB - compareValueA;
     }
   });
 
@@ -92,6 +97,12 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
     }
   };
 
+  // Function to reorder columns to place the sort column first
+  const getOrderedColumns = () => {
+    const otherColumns = selectedColumns.filter(column => column !== sortColumn);
+    return [sortColumn, ...otherColumns];
+  };
+
   return (
     <div id="table_div">
       {/* Header */}
@@ -109,8 +120,8 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
               label="Sort by"
               onChange={(e: SelectChangeEvent<string>) => setSortColumn(e.target.value)}
             >
-              {/* Mapping column options */}
-              {columnOptions.map((column) => (
+              {/* Mapping selected column options */}
+              {selectedColumns.map((column) => (
                 <MenuItem key={column} value={column}>
                   {/* Change label for specific columns */}
                   {column === 'Dust Name' ? 'Dust Type' : column === 'Tag' ? 'Experiment Name' : column}
@@ -165,8 +176,8 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
         <table>
           <thead>
             <tr>
-              {/* Mapping selected columns for table headers */}
-              {selectedColumns.map((column) => (
+              {/* Mapping ordered columns for table headers */}
+              {getOrderedColumns().map((column) => (
                 <th key={column}>
                   {column === 'Dust Name' ? 'Dust Type' : column === 'Tag' ? 'Experiment Name' : column}
                 </th>
@@ -177,8 +188,8 @@ const DataTable: React.FC<DataTableProps> = ({ data }) => {
             {/* Mapping sorted data for table rows */}
             {sortedData.map((item, index) => (
               <tr key={index}>
-                {/* Mapping selected columns for table cells */}
-                {selectedColumns.map((column) => (
+                {/* Mapping ordered columns for table cells */}
+                {getOrderedColumns().map((column) => (
                   <td key={column}>
                     {/* Change label for specific columns */}
                     {column === 'Dust Name' ? item['Dust Name'] : column === 'Experiment Name' ? item['Tag'] : item[column]}
